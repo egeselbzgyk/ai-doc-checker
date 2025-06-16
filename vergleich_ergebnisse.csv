@@ -1,6 +1,0 @@
-Bild,ResNet50 Vorhersage,ResNet50 Genauigkeit,ResNet50 Zeit,EfficientNet-B0 Vorhersage,EfficientNet-B0 Genauigkeit,EfficientNet-B0 Zeit,Vision Transformer Vorhersage,Vision Transformer Genauigkeit,Vision Transformer Zeit
-banana.jpeg,banana,60.42%,0.296 Sekunden,banana,18.20%,0.178 Sekunden,banana,41.62%,0.544 Sekunden
-goldenretriever.jpg,golden retriever,91.63%,0.253 Sekunden,golden retriever,87.34%,0.146 Sekunden,golden retriever,47.49%,0.526 Sekunden
-laptop.jpg,notebook,53.82%,0.245 Sekunden,desktop computer,20.01%,0.138 Sekunden,desktop computer,24.03%,0.534 Sekunden
-pizza-tonno.jpg,pizza,99.68%,0.250 Sekunden,pizza,89.49%,0.147 Sekunden,pizza,90.29%,0.540 Sekunden
-zebra.jpg,zebra,100.00%,0.250 Sekunden,zebra,92.05%,0.139 Sekunden,zebra,94.27%,0.510 Sekunden
