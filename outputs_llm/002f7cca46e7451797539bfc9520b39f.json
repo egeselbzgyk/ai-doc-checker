@@ -1,0 +1,8 @@
+{
+  "objekt_typ": "DataSource",
+  "anzahl_felder": 4,
+  "hat_schlüssel": false,
+  "besondere_merkmale": []
+}
+
+Das Bild zeigt eine DataSource mit 4 Feldern (FIELD1, FIELD2, FIELD3, FIELD4). Es gibt keine Hinweise auf einen Schlüssel oder besondere Merkmale wie vererbte Merkmale oder Navigationsattribute. Die DataSource scheint eine normale Quelldatenstruktur darzustellen.

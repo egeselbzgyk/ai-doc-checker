@@ -1,0 +1,50 @@
+{
+  "created_at": "20250619_193609",
+  "selection_method": "automatic_best_score",
+  "total_categories": 3,
+  "total_references": 3,
+  "selection_criteria": {
+    "cnn_weight": 0.3,
+    "claude_weight": 0.7,
+    "min_threshold": 0.4,
+    "penalty_for_claude_failure": 0.5
+  },
+  "references": {
+    "Info-Object": [
+      {
+        "filename": "005a2c943c5a4344bc058a3680a62c43.png",
+        "selection_reason": "Highest combined score: 0.850",
+        "cnn_confidence": 0.9658266305923462,
+        "claude_score": 8,
+        "claude_success": true,
+        "combined_score": 0.8497479891777038,
+        "selected_at": "2025-06-19T19:36:01.329971",
+        "selection_method": "automatic_best_score"
+      }
+    ],
+    "Excel-Tabelle": [
+      {
+        "filename": "0042c7e49bb143ca9b50b3d6336c003b.png",
+        "selection_reason": "Highest combined score: 0.860",
+        "cnn_confidence": 0.9985775947570801,
+        "claude_score": 8,
+        "claude_success": true,
+        "combined_score": 0.8595732784271239,
+        "selected_at": "2025-06-19T19:36:01.329971",
+        "selection_method": "automatic_best_score"
+      }
+    ],
+    "Data Source": [
+      {
+        "filename": "008e8269e68341848a3680ebc4f11910.jpeg",
+        "selection_reason": "Highest combined score: 0.499",
+        "cnn_confidence": 0.9981843829154968,
+        "claude_score": 0,
+        "claude_success": false,
+        "combined_score": 0.4990921914577484,
+        "selected_at": "2025-06-19T19:36:01.329971",
+        "selection_method": "automatic_best_score"
+      }
+    ]
+  }
+}

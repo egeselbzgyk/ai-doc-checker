@@ -1,0 +1,21 @@
+{
+  "analysis_timestamp": "20250619_191555",
+  "model_used": "Claude Sonnet 3 + EfficientNet-B0",
+  "total_images_processed": 10,
+  "successful_analyses": 10,
+  "claude_successful_analyses": 4,
+  "categories_found": [
+    "Info-Object",
+    "Excel-Tabelle",
+    "Data Source"
+  ],
+  "reference_candidates_per_category": {
+    "Info-Object": 3,
+    "Excel-Tabelle": 2,
+    "Data Source": 2
+  },
+  "files_generated": {
+    "full_results": "validation_claude_results_20250619_191555.json",
+    "reference_candidates": "reference_candidates_claude_20250619_191555.json"
+  }
+}

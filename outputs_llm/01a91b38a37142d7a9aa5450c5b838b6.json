@@ -1,0 +1,7 @@
+{
+  "anzahl_knoten": 2,
+  "anzahl_kanten": 1,
+  "richtung": "unidirektional",
+  "verwendete_elemente": ["Datenquelle", "Ziel"],
+  "besondere_merkmale": ["Gruppierung"]
+}

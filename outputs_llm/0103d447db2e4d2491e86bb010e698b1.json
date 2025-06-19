@@ -1,0 +1,6 @@
+{
+  "objekt_typ": "Composite Provider",
+  "anzahl_felder": "12 felder geschätzt",
+  "hat_schlüssel": true,
+  "besondere_merkmale": ["Navigationsattribute wie Calendar Year, Country Key, Sales Organization"]
+}

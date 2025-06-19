@@ -1,0 +1,7 @@
+{
+  "anzahl_eingabefelder": 9,
+  "anzahl_ausgabefelder": 11,
+  "mapping_typ": "1:n",
+  "operationen": ["Filterung"],
+  "besondere_merkmale": ["Farbkodierung"]
+}

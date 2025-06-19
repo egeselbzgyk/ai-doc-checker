@@ -1,0 +1,28 @@
+AUTOMATIC REFERENCE SELECTION SUMMARY
+========================================
+
+Selection Time: 2025-06-19 19:36:09
+Selection Method: Automatic (Best Combined Score)
+Total Categories: 3
+
+📁 Info-Object:
+   ✅ 005a2c943c5a4344bc058a3680a62c43.png
+   📊 CNN: 96.58%
+   🤖 Claude: 8.0/10
+   ⭐ Combined Score: 0.850
+   📝 Reason: Highest combined score: 0.850
+
+📁 Excel-Tabelle:
+   ✅ 0042c7e49bb143ca9b50b3d6336c003b.png
+   📊 CNN: 99.86%
+   🤖 Claude: 8.0/10
+   ⭐ Combined Score: 0.860
+   📝 Reason: Highest combined score: 0.860
+
+📁 Data Source:
+   ✅ 008e8269e68341848a3680ebc4f11910.jpeg
+   📊 CNN: 99.82%
+   🤖 Claude: ❌ Failed
+   ⭐ Combined Score: 0.499
+   📝 Reason: Highest combined score: 0.499
+
