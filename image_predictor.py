@@ -12,7 +12,6 @@ model = models.efficientnet_b0(weights=None)
 model.classifier[1] = torch.nn.Linear(model.classifier[1].in_features, 6)
 model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
 model.eval()
-
 device = torch.device("cpu")
 model.to(device)
 
@@ -35,43 +34,51 @@ input_tensor.requires_grad_(True)
 output = model(input_tensor)
 pred_class = torch.argmax(output, dim=1).item()
 
-# 4. IG HESABI (düşük adım sayısı ile)
-baseline = torch.zeros_like(input_tensor).to(device)
-ig = IntegratedGradients(model)
+# 4. IG – AŞAMALI GÖSTERİM
 
-attributions, delta = ig.attribute(
-    input_tensor,
-    baselines=baseline,
-    target=pred_class,
-    n_steps=2,
-    return_convergence_delta=True
-)
+def interpolate_inputs(baseline, input_tensor, alphas):
+    return [(baseline + alpha * (input_tensor - baseline)).detach() for alpha in alphas]
 
-# 5. GÖRSALLEŞTİRME
-attr = attributions.squeeze().detach().cpu().numpy()
-attr = np.mean(attr, axis=0)
-attr = np.maximum(attr, 0)
-attr = attr / (np.max(attr) + 1e-8)
+def compute_gradients(input_batch, model, target_class):
+    input_batch.requires_grad_(True)
+    output = model(input_batch)
+    loss = output[0, target_class]
+    loss.backward()
+    gradients = input_batch.grad.detach()
+    return gradients
 
-def show_image_attr(img_tensor, attr_map):
-    img = img_tensor.squeeze().detach().cpu().numpy()
-    img = np.transpose(img, (1, 2, 0))
-    img = img * [0.229, 0.224, 0.225] + [0.485, 0.456, 0.406]
-    img = np.clip(img, 0, 1)
+def visualize_ig_steps(model, input_tensor, baseline, target_class, n_steps=6):
+    alphas = torch.linspace(0, 1, steps=n_steps)
+    interpolated_inputs = interpolate_inputs(baseline, input_tensor, alphas)
 
-    plt.figure(figsize=(10, 4))
-    plt.subplot(1, 2, 1)
-    plt.imshow(img)
-    plt.title("Original")
-    plt.axis("off")
+    fig, axes = plt.subplots(2, n_steps, figsize=(n_steps * 2.5, 5))
 
-    plt.subplot(1, 2, 2)
-    plt.imshow(img)
-    plt.imshow(attr_map, cmap="hot", alpha=0.5)
-    plt.title("Integrated Gradients")
-    plt.axis("off")
+    for i, inp in enumerate(interpolated_inputs):
+        inp = inp.to(input_tensor.device)
+        gradients = compute_gradients(inp.clone(), model, target_class)
+        gradient_image = gradients.squeeze().cpu().numpy()
+        gradient_image = np.mean(gradient_image, axis=0)
+        gradient_image = np.abs(gradient_image)
+        gradient_image = gradient_image / (np.max(gradient_image) + 1e-8)
 
+        # Görseli inverse normalize et
+        orig_img = inp.squeeze().cpu().numpy()
+        orig_img = np.transpose(orig_img, (1, 2, 0))
+        orig_img = orig_img * [0.229, 0.224, 0.225] + [0.485, 0.456, 0.406]
+        orig_img = np.clip(orig_img, 0, 1)
+
+        axes[0, i].imshow(orig_img)
+        axes[0, i].set_title(f"α = {alphas[i]:.1f}")
+        axes[0, i].axis("off")
+
+        axes[1, i].imshow(gradient_image, cmap='hot')
+        axes[1, i].axis("off")
+
+    axes[0, 0].set_ylabel("Interpolated Inputs", fontsize=10)
+    axes[1, 0].set_ylabel("Gradients", fontsize=10)
     plt.tight_layout()
     plt.show()
 
-show_image_attr(input_tensor, attr)
+# AŞAMALI GÖRSELLEŞTİRMEYİ ÇAĞIR
+baseline = torch.zeros_like(input_tensor).to(device)
+visualize_ig_steps(model, input_tensor, baseline, pred_class, n_steps=6)
