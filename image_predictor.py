@@ -26,7 +26,7 @@ def load_image(img_path):
     img = Image.open(img_path).convert("RGB")
     return transform(img).unsqueeze(0)
 
-image_path = "test_images/4.png"
+image_path = "test_images/5.png"
 input_tensor = load_image(image_path).to(device)
 input_tensor.requires_grad_(True)
 

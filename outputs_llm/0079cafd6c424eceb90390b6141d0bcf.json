@@ -1,8 +1,0 @@
-Das Bild zeigt kein eigentliches Informationsobjekt wie einen InfoCube oder Dataprovider. Es ist stattdessen ein Dialog zum Einrichten eines Datentransferprozesses in einer SAP-Umgebung. In diesem Dialog kann der Benutzer die Quell- und Zieldatenquelle auswählen. Die JSON-Struktur wäre daher wie folgt:
-
-{
-  "objekt_typ": "Datentransferprozess-Dialog",
-  "anzahl_felder": "3 (Pfad, Quelle, Ziel)",
-  "hat_schlüssel": false,
-  "besondere_merkmale": []
-}

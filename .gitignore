@@ -1,0 +1,183 @@
+# AI Doc Checker - Git Ignore File
+
+# ================================
+# Dataset and Training Data
+# ================================
+dataset/
+test_images/
+vergleich-fotos/
+
+# ================================
+# Model Files (Large)
+# ================================
+model/
+*.pth
+*.pt
+*.h5
+*.pkl
+*.joblib
+
+# ================================
+# Results and Output Files
+# ================================
+results/
+outputs_llm/
+evaluation_result_*.json
+*_result_*.json
+
+# ================================
+# Upload and Temporary Directories
+# ================================
+frontend/uploads/
+temp/
+tmp/
+*.tmp
+
+# ================================
+# Python
+# ================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ================================
+# Jupyter Notebook
+# ================================
+.ipynb_checkpoints
+
+# ================================
+# Node.js (if used)
+# ================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ================================
+# IDEs and Editors
+# ================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ================================
+# OS Generated files
+# ================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ================================
+# Test and Debug Files
+# ================================
+test_*.py
+debug_*.py
+*_test.py
+*_debug.py
+test_abgabe.*
+*.log
+
+# ================================
+# SSH and Config Files
+# ================================
+ssh_config
+*.key
+*.pem
+config.ini
+secrets.json
+
+# ================================
+# Backup and Archive Files
+# ================================
+*.bak
+*.backup
+*.zip
+*.tar.gz
+*.rar
+abgabe.zip
+
+# ================================
+# Documentation (if auto-generated)
+# ================================
+docs/_build/
+
+# ================================
+# Specific Project Files
+# ================================
+# Metadata database (large)
+
+# Evaluation system old versions
+evaluation_system/
+
+# Old templates
+*_old.py
+*_templates_old.py
+
+# Project documentation (if contains sensitive info)
+*.pdf
+*.docx
+Dokumentation_*.pdf
+Projekt_*.pdf 

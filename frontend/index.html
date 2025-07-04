@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Doc Checker - Bewertungssystem</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧑‍🎓</text></svg>">
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">AI Doc Checker</h1>
+                <p class="subtitle">Automatisierte Bewertung von SAP BW Dokumentationen</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel - Musterlösung -->
+            <div class="panel left-panel">
+                <div class="panel-header">
+                    <h2>Musterlösung</h2>
+                    <div class="checkbox-container">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="useDatabase" class="checkbox">
+                            <span class="checkmark"></span>
+                            Bestehende Musterlösung verwenden
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="upload-section" id="referenceUpload">
+                    <div class="upload-area" id="referenceDropZone">
+                        <div class="upload-icon"></div>
+                        <h3>Musterlösung hochladen</h3>
+                        <p>ZIP, PDF oder Bilder (max. 5 Bilder, 10MB)</p>
+                        <input type="file" id="referenceFiles" multiple accept=".zip,.pdf,.jpg,.jpeg,.png" style="display: none;">
+                        <button class="upload-btn" onclick="document.getElementById('referenceFiles').click()">
+                            Dateien auswählen
+                        </button>
+                    </div>
+                    
+                    <div class="file-list" id="referenceFileList"></div>
+                </div>
+
+                <div class="database-info" id="databaseInfo" style="display: none;">
+                    <div class="info-box">
+                        <div class="info-icon"></div>
+                        <div>
+                            <h4>Bestehende Musterlösung wird verwendet</h4>
+                            <p>Das System vergleicht mit vorhandenen Referenzen aus der Datenbank.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Abgabe -->
+            <div class="panel right-panel">
+                <div class="panel-header">
+                    <h2>Abgabe</h2>
+                </div>
+                
+                <div class="upload-section">
+                    <div class="upload-area" id="submissionDropZone">
+                        <div class="upload-icon"></div>
+                        <h3>Abgabe-ZIP hochladen</h3>
+                        <p>ZIP-Datei mit PDF (max. 10MB)</p>
+                        <input type="file" id="submissionFile" accept=".zip" style="display: none;">
+                        <button class="upload-btn" onclick="document.getElementById('submissionFile').click()">
+                            ZIP-Datei auswählen
+                        </button>
+                    </div>
+                    
+                    <div class="file-list" id="submissionFileList"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Action Button -->
+        <div class="action-section">
+            <button class="evaluate-btn" id="evaluateBtn" disabled>
+                <span class="btn-text">Bewertung starten</span>
+                <div class="loading-spinner" style="display: none;"></div>
+            </button>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div class="results-header">
+                <h2>Bewertungsergebnis</h2>
+            </div>
+            
+            <div class="overall-score" id="overallScore">
+                <div class="score-circle">
+                    <span class="score-value" id="scoreValue">--</span>
+                    <span class="score-max">/100</span>
+                </div>
+                <div class="score-status" id="scoreStatus">
+                    <span class="status-text">--</span>
+                </div>
+            </div>
+
+            <div class="detailed-results" id="detailedResults">
+                <!-- Detaillierte Ergebnisse werden hier eingefügt -->
+            </div>
+        </div>
+    </div>
+
+    <script src="static/script.js"></script>
+</body>
+</html> 
