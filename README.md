@@ -25,13 +25,13 @@ The evaluation system processes student PDF submissions through multiple stages:
 
 ## Quick Start
 
-    1. In ki4.mni.thm.de muss "python qwen_api_server.py" ausgeführt werden.
+    1. in ki4.mni.thm.de "python qwen_api_server.py" must be executed.
 
-    2. Um lokal und Server zu verbinden: ssh -L 5000:localhost:5000 benutzerName@ki4.mni.thm.de
+    2. to connect local and server: ssh -L 5000:localhost:5000 benutzerName@ki4.mni.thm.de
 
-    3. app.py ausführen.
+    3. Execute app.py.
 
-    4. Dann zu http://localhost:5001/
+    4. then to http://localhost:5001/
 
 ### Prerequisites
 
