@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI Doc Checker - Evaluation System V2
 
 Complete automated evaluation system for student PDF submissions containing SAP BW diagrams and content.
@@ -235,5 +236,3 @@ generator.update_database()
 # Generate metadata for specific category
 metadata = generator.generate_category_metadata("Excel-Tabelle")
 ```
-
-1.
