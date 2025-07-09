@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # AI Doc Checker - Evaluation System V2
 
 Complete automated evaluation system for student PDF submissions containing SAP BW diagrams and content.
