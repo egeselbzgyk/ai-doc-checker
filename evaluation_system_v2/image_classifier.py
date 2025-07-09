@@ -54,7 +54,7 @@ class ImageClassifier:
             self.model = self.model.to(self.device)
             self.model.eval()
             
-            print(f"✅ EfficientNet model loaded from {self.model_path}")
+            print(f"EfficientNet model loaded from {self.model_path}")
             
         except Exception as e:
             raise Exception(f"Failed to load model: {str(e)}")
@@ -197,14 +197,12 @@ if __name__ == "__main__":
     # Test classifier
     classifier = ImageClassifier()
     
-    # Test with a sample image
-    test_image = "../test_images/1.jpg"
+    test_image = r"C:\Users\egese\Documents\GitHub\ai-doc-checker\testpic.png"
     if os.path.exists(test_image):
         try:
             predicted_class, confidence, is_valid = classifier.predict_from_path(test_image)
             print(f"Prediction: {predicted_class}")
             print(f"Confidence: {confidence:.3f}")
-            print(f"Valid (>= {classifier.confidence_threshold}): {is_valid}")
         except Exception as e:
             print(f"Error: {e}")
     else:

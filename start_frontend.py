@@ -2,7 +2,7 @@
 """
 AI Doc Checker Frontend Starter
 
-Startet das Frontend für das AI Doc Checker System mit automatischen Prüfungen.
+Starts the frontend for the AI Doc Checker System with automatic checks.
 """
 
 import os
@@ -12,16 +12,16 @@ import importlib.util
 from pathlib import Path
 
 def check_python_version():
-    """Prüft Python Version"""
+    """Check Python version"""
     if sys.version_info < (3, 8):
-        print("❌ Python 3.8+ erforderlich!")
-        print(f"   Aktuelle Version: {sys.version}")
+        print("Python 3.8+ required!")
+        print(f"   Current version: {sys.version}")
         return False
-    print(f"✅ Python Version: {sys.version.split()[0]}")
+    print(f"Python Version: {sys.version.split()[0]}")
     return True
 
 def check_dependencies():
-    """Prüft erforderliche Python-Pakete"""
+    """Check required Python packages"""
     required_packages = [
         'flask',
         'flask_cors',
@@ -45,18 +45,18 @@ def check_dependencies():
                 import flask_cors
             else:
                 importlib.import_module(package)
-            print(f"✅ {package}")
+            print(f"{package}")
         except ImportError:
-            print(f"❌ {package} fehlt")
+            print(f"{package} missing")
             missing_packages.append(package)
     
     return missing_packages
 
 def check_evaluation_system():
-    """Prüft ob evaluation_system_v2 verfügbar ist"""
+    """Check if evaluation_system_v2 is available"""
     eval_path = Path('./evaluation_system_v2')
     if not eval_path.exists():
-        print("❌ evaluation_system_v2 Ordner nicht gefunden!")
+        print("evaluation_system_v2 folder not found!")
         return False
     
     required_files = [
@@ -69,25 +69,25 @@ def check_evaluation_system():
     
     for file in required_files:
         if not (eval_path / file).exists():
-            print(f"❌ {file} nicht gefunden in evaluation_system_v2/")
+            print(f"{file} not found in evaluation_system_v2/")
             return False
-        print(f"✅ {file}")
+        print(f"{file}")
     
     return True
 
 def check_model_file():
-    """Prüft ob EfficientNet Modell verfügbar ist"""
+    """Check if EfficientNet model is available"""
     model_path = Path('./model/efficientnet_b0_best.pth')
     if not model_path.exists():
-        print("⚠️  EfficientNet Modell nicht gefunden!")
-        print("   Pfad: ./model/efficientnet_b0_best.pth")
-        print("   Bewertung ohne Klassifizierung möglich")
+        print("EfficientNet model not found!")
+        print("   Path: ./model/efficientnet_b0_best.pth")
+        print("   Evaluation without classification possible")
         return False
-    print("✅ EfficientNet Modell gefunden")
+    print("EfficientNet model found")
     return True
 
 def check_frontend_files():
-    """Prüft Frontend-Dateien"""
+    """Check frontend files"""
     frontend_files = [
         'frontend/index.html',
         'frontend/static/style.css',
@@ -97,18 +97,18 @@ def check_frontend_files():
     
     for file in frontend_files:
         if not Path(file).exists():
-            print(f"❌ {file} nicht gefunden!")
+            print(f"{file} not found!")
             return False
-        print(f"✅ {file}")
+        print(f"{file}")
     
     return True
 
 def install_dependencies(missing_packages):
-    """Installiert fehlende Abhängigkeiten"""
+    """Install missing dependencies"""
     if not missing_packages:
         return True
     
-    print(f"\n📦 Installiere fehlende Pakete: {', '.join(missing_packages)}")
+    print(f"\nInstalling missing packages: {', '.join(missing_packages)}")
     
     try:
         # Map package names for pip
@@ -125,64 +125,64 @@ def install_dependencies(missing_packages):
         
         cmd = [sys.executable, '-m', 'pip', 'install'] + pip_packages
         subprocess.run(cmd, check=True)
-        print("✅ Pakete erfolgreich installiert")
+        print("Packages installed successfully")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"❌ Installation fehlgeschlagen: {e}")
+        print(f"Installation failed: {e}")
         return False
 
 def start_server():
-    """Startet den Flask Server"""
-    print("\n🚀 Starte AI Doc Checker Frontend...")
-    print("📄 Frontend: http://localhost:5001")
-    print("🔍 Health Check: http://localhost:5001/api/health")
-    print("⏹️  Beenden mit Ctrl+C")
+    """Start the Flask Server"""
+    print("\nStarting AI Doc Checker Frontend...")
+    print("Frontend: http://localhost:5001")
+    print("Health Check: http://localhost:5001/api/health")
+    print("Stop with Ctrl+C")
     print("-" * 50)
     
     try:
         import app
         app.app.run(debug=False, host='0.0.0.0', port=5001)
     except KeyboardInterrupt:
-        print("\n👋 Server beendet")
+        print("\nServer stopped")
     except Exception as e:
-        print(f"\n❌ Server-Fehler: {e}")
+        print(f"\nServer error: {e}")
 
 def main():
-    """Hauptfunktion"""
+    """Main function"""
     print("AI Doc Checker - Frontend Starter")
     print("=" * 40)
     
-    # System-Prüfungen
-    print("\n🔍 System-Prüfungen:")
+    # System checks
+    print("\nSystem checks:")
     
     if not check_python_version():
         sys.exit(1)
     
-    print("\n📦 Abhängigkeiten:")
+    print("\nDependencies:")
     missing = check_dependencies()
     
     if missing:
-        answer = input(f"\n❓ {len(missing)} Pakete fehlen. Installieren? (j/n): ")
+        answer = input(f"\n{len(missing)} packages missing. Install? (y/n): ")
         if answer.lower() in ['j', 'ja', 'y', 'yes']:
             if not install_dependencies(missing):
                 sys.exit(1)
         else:
-            print("⚠️  Ohne Abhängigkeiten kann das System nicht funktionieren")
+            print("Without dependencies the system cannot function")
             sys.exit(1)
     
-    print("\n🔧 System-Komponenten:")
+    print("\nSystem components:")
     if not check_evaluation_system():
         sys.exit(1)
     
-    check_model_file()  # Warning, aber nicht kritisch
+    check_model_file()  # Warning, but not critical
     
-    print("\n📁 Frontend-Dateien:")
+    print("\nFrontend files:")
     if not check_frontend_files():
         sys.exit(1)
     
-    print("\n✅ Alle Prüfungen erfolgreich!")
+    print("\nAll checks successful!")
     
-    # Server starten
+    # Start server
     start_server()
 
 if __name__ == '__main__':

@@ -24,6 +24,14 @@ The evaluation system processes student PDF submissions through multiple stages:
 
 ## Quick Start
 
+    1. In ki4.mni.thm.de muss "python qwen_api_server.py" ausgeführt werden.
+
+    2. Um lokal und Server zu verbinden: ssh -L 5000:localhost:5000 benutzerName@ki4.mni.thm.de
+
+    3. app.py ausführen.
+
+    4. Dann zu http://localhost:5001/
+
 ### Prerequisites
 
 1. **Qwen 2.5-VL Server**: Running on `http://ki4.mni.thm.de:5000`
@@ -72,18 +80,21 @@ Open `evaluation_demo.ipynb` for an interactive demonstration and testing interf
 ### Core Components
 
 #### 1. PDFImageExtractor
+
 - Extracts images from PDF files using PyMuPDF
 - Filters images by minimum size
 - Converts to base64 for API processing
 - Supports dynamic image count (1-N images per PDF)
 
 #### 2. ImageClassifier
+
 - EfficientNet B0 model trained on SAP BW images
 - 6-class classification with confidence thresholding
 - 60% confidence threshold for valid predictions
 - GPU/CPU support with automatic device selection
 
 #### 3. QwenClient
+
 - Interface to Qwen 2.5-VL API server
 - Image evaluability assessment
 - Metadata extraction for content analysis
@@ -91,12 +102,14 @@ Open `evaluation_demo.ipynb` for an interactive demonstration and testing interf
 - Robust error handling and retry logic
 
 #### 4. MetadataGenerator
+
 - Batch processing of reference solutions
 - Metadata extraction for fast content matching
 - Database generation and maintenance
 - Incremental updates support
 
 #### 5. EvaluationEngine
+
 - Main orchestrator for complete evaluation workflow
 - Multi-stage processing pipeline
 - Error handling and recovery
@@ -129,16 +142,19 @@ JSON Results + Summary
 ## Configuration
 
 ### Qwen Server Configuration
+
 - Default URL: `http://ki4.mni.thm.de:5000`
 - Endpoints: `/health`, `/analyze`, `/text_only`
 - Timeout: 60 seconds for image analysis
 
 ### Classification Thresholds
+
 - Confidence threshold: 60% (configurable)
 - Pass threshold: 70 points (configurable)
 - Image minimum size: 100x100 pixels
 
 ### File Paths
+
 - Model path: `../model/efficientnet_b0_best.pth`
 - Reference images: `../dataset/mapped_train/`
 - Metadata database: `metadata_database.json`
@@ -146,6 +162,7 @@ JSON Results + Summary
 ## Output Format
 
 ### Evaluation Result JSON
+
 ```json
 {
   "pdf_path": "student_submission.pdf",
@@ -178,6 +195,7 @@ JSON Results + Summary
 ## Advanced Usage
 
 ### Custom Configuration
+
 ```python
 # Custom confidence threshold
 classifier = ImageClassifier(confidence_threshold=0.7)
@@ -190,6 +208,7 @@ engine = EvaluationEngine(metadata_db_path="custom_metadata.json")
 ```
 
 ### Batch Processing
+
 ```python
 # Process multiple PDFs
 pdf_files = ["student1.pdf", "student2.pdf", "student3.pdf"]
@@ -202,6 +221,7 @@ for pdf_file in pdf_files:
 ```
 
 ### Metadata Database Management
+
 ```python
 from evaluation_system_v2 import MetadataGenerator
 
@@ -216,73 +236,4 @@ generator.update_database()
 metadata = generator.generate_category_metadata("Excel-Tabelle")
 ```
 
-## Troubleshooting
-
-### Common Issues
-
-1. **Qwen Server Not Available**
-   - Check server status: `curl http://ki4.mni.thm.de:5000/health`
-   - Verify VPN connection to university network
-   - Check firewall settings
-
-2. **EfficientNet Model Not Found**
-   - Verify model file exists: `../model/efficientnet_b0_best.pth`
-   - Check file permissions
-   - Ensure model was trained with correct architecture
-
-3. **Low Classification Confidence**
-   - Images may be poor quality or wrong content type
-   - Check image resolution and clarity
-   - Verify images contain SAP BW content
-
-4. **No Reference Matches Found**
-   - Ensure metadata database exists and is populated
-   - Check reference image categories match classifier output
-   - Regenerate metadata database if needed
-
-### Debug Mode
-```python
-# Enable detailed logging
-import logging
-logging.basicConfig(level=logging.DEBUG)
-
-# Test individual components
-health = qwen_client.health_check()
-print(f"Qwen status: {health}")
-
-prediction = classifier.predict_from_path("test_image.jpg")
-print(f"Classification: {prediction}")
-```
-
-## Performance Considerations
-
-- **PDF Processing**: ~1-2 seconds per page
-- **Image Classification**: ~0.1 seconds per image (GPU)
-- **Qwen Analysis**: ~2-5 seconds per image
-- **Total Processing**: ~5-15 seconds per PDF (varies by content)
-
-## Security Notes
-
-- All image data is transmitted to Qwen server as base64
-- No persistent storage of student images on server
-- Temporary files are automatically cleaned up
-- Evaluation results contain no personal information
-
-## Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Add tests for new functionality
-4. Update documentation
-5. Submit pull request
-
-## License
-
-Internal university project - not for public distribution.
-
-## Support
-
-For technical support or questions:
-- Check troubleshooting section
-- Review system logs
-- Contact development team 
+1.

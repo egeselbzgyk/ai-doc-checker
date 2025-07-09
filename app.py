@@ -18,14 +18,14 @@ try:
     from qwen_client import QwenClient
     from metadata_generator import MetadataGenerator
 except ImportError:
-    print("⚠️  Evaluation system imports fehlgeschlagen")
-    print("   Stelle sicher, dass evaluation_system_v2/ verfügbar ist")
+    print("Evaluation system imports failed")
+    print("   Make sure evaluation_system_v2/ is available")
     EvaluationEngine = None
 
 app = Flask(__name__, static_folder='frontend/static', static_url_path='/static')
 CORS(app)
 
-# Konfiguration
+# Configuration
 UPLOAD_FOLDER = './frontend/uploads'
 ALLOWED_EXTENSIONS = {'zip', 'pdf', 'png', 'jpg', 'jpeg'}
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10MB
@@ -33,26 +33,26 @@ MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10MB
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
 
-# Upload-Ordner erstellen
+# Create upload folder
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Evaluation Engine initialisieren
+# Initialize Evaluation Engine
 evaluation_engine = None
 if EvaluationEngine:
     try:
         evaluation_engine = EvaluationEngine()
-        print("✅ Evaluation Engine initialisiert")
+        print("Evaluation Engine initialized")
     except Exception as e:
-        print(f"⚠️  Evaluation Engine Fehler: {e}")
+        print(f"Evaluation Engine Error: {e}")
 else:
-    print("⚠️  Evaluation Engine nicht verfügbar")
+    print("Evaluation Engine not available")
 
 def allowed_file(filename):
-    """Prüft ob Dateierweiterung erlaubt ist"""
+    """Check if file extension is allowed"""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def save_uploaded_file(file, prefix=""):
-    """Speichert hochgeladene Datei und gibt Pfad zurück"""
+    """Save uploaded file and return path"""
     if file and file.filename and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         if prefix:
@@ -64,18 +64,18 @@ def save_uploaded_file(file, prefix=""):
     return None
 
 def extract_pdf_from_zip(zip_path):
-    """Extrahiert PDF aus ZIP-Datei"""
+    """Extract PDF from ZIP file"""
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         for file_info in zip_ref.filelist:
             if file_info.filename.lower().endswith('.pdf'):
-                # PDF in temporäres Verzeichnis extrahieren
+                # Extract PDF to temporary directory
                 temp_dir = tempfile.mkdtemp()
                 pdf_path = zip_ref.extract(file_info, temp_dir)
                 return pdf_path
     return None
 
 def process_custom_references(reference_files):
-    """Verarbeitet benutzerdefinierte Referenzdateien"""
+    """Process custom reference files"""
     temp_metadata = {}
     processed_files = []
     
@@ -87,7 +87,7 @@ def process_custom_references(reference_files):
         file_ext = filename.split('.')[-1].lower()
         
         if file_ext == 'zip':
-            # ZIP extrahieren und PDF finden
+            # Extract ZIP and find PDF
             pdf_path = extract_pdf_from_zip(file_path)
             if pdf_path:
                 processed_files.append(pdf_path)
@@ -96,26 +96,26 @@ def process_custom_references(reference_files):
         elif file_ext in ['jpg', 'jpeg', 'png']:
             processed_files.append(file_path)
     
-    # Metadata für Referenzdateien generieren
+    # Generate metadata for reference files
     if processed_files:
         metadata_generator = MetadataGenerator()
         
         for file_path in processed_files:
             try:
                 if file_path.lower().endswith('.pdf'):
-                    # PDF zu Bildern verarbeiten
+                    # Process PDF to images
                     extractor = PDFImageExtractor()
                     images = extractor.extract_images_as_base64_only(file_path)
                     
                     for img_data in images:
-                        # Klassifizierung
+                        # Classification
                         classifier = ImageClassifier()
                         predicted_class, confidence, is_valid = classifier.predict_from_base64(
                             img_data["image_base64"]
                         )
                         
                         if is_valid:
-                            # Metadata generieren
+                            # Generate metadata
                             qwen_client = QwenClient()
                             metadata_result = qwen_client.extract_metadata(
                                 img_data["image_base64"], predicted_class
@@ -133,17 +133,17 @@ def process_custom_references(reference_files):
                             })
                 
                 elif file_path.lower().endswith(('.jpg', '.jpeg', '.png')):
-                    # Einzelnes Bild verarbeiten
+                    # Process single image
                     import base64
                     with open(file_path, 'rb') as f:
                         img_base64 = base64.b64encode(f.read()).decode()
                     
-                    # Klassifizierung
+                    # Classification
                     classifier = ImageClassifier()
                     predicted_class, confidence, is_valid = classifier.predict_from_base64(img_base64)
                     
                     if is_valid:
-                        # Metadata generieren
+                        # Generate metadata
                         qwen_client = QwenClient()
                         metadata_result = qwen_client.extract_metadata(img_base64, predicted_class)
                         metadata = metadata_result.get("metadata", {}) if metadata_result.get("status") == "success" else {}
@@ -159,7 +159,7 @@ def process_custom_references(reference_files):
                         })
                         
             except Exception as e:
-                print(f"Fehler bei Verarbeitung von {file_path}: {e}")
+                print(f"Error processing {file_path}: {e}")
                 continue
     
     return temp_metadata
@@ -180,69 +180,69 @@ def favicon():
 
 @app.route('/api/evaluate', methods=['POST'])
 def evaluate():
-    """Hauptendpoint für Bewertung"""
+    """Main endpoint for evaluation"""
     try:
-        print("📥 Evaluate Request erhalten")
+        print("Evaluate Request received")
         
         # Use database flag check
         use_database = request.form.get('use_database', 'false').lower() == 'true'
-        print(f"🗄️ Use Database: {use_database}")
+        print(f"Use Database: {use_database}")
         
-        # Evaluation Engine Check nur für Database Mode
+        # Evaluation Engine Check only for Database Mode
         if use_database and not evaluation_engine:
-            return jsonify({'error': 'Standard-Bewertungssystem nicht verfügbar. Qwen Server nicht erreichbar.'}), 503
+            return jsonify({'error': 'Standard evaluation system not available. Qwen Server not reachable.'}), 503
         
-        # Abgabe-Datei prüfen
+        # Check submission file
         if 'submission' not in request.files:
-            return jsonify({'error': 'Keine Abgabe-Datei hochgeladen'}), 400
+            return jsonify({'error': 'No submission file uploaded'}), 400
         
         submission_file = request.files['submission']
         if submission_file.filename == '':
-            return jsonify({'error': 'Keine Abgabe-Datei ausgewählt'}), 400
+            return jsonify({'error': 'No submission file selected'}), 400
         
-        print(f"📄 Abgabe-Datei: {submission_file.filename}")
+        print(f"Submission file: {submission_file.filename}")
         
-        # Abgabe-Datei speichern
+        # Save submission file
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         submission_path = save_uploaded_file(submission_file, f"submission_{timestamp}")
         
         if not submission_path:
-            return jsonify({'error': 'Fehler beim Speichern der Abgabe-Datei'}), 400
+            return jsonify({'error': 'Error saving submission file'}), 400
         
-        print(f"💾 Abgabe gespeichert: {submission_path}")
+        print(f"Submission saved: {submission_path}")
         
-        # PDF extrahieren (ZIP oder direkte PDF)
+        # Extract PDF (ZIP or direct PDF)
         pdf_path = None
         try:
             if submission_path.lower().endswith('.zip'):
-                # ZIP extrahieren
+                # Extract ZIP
                 pdf_path = extract_pdf_from_zip(submission_path)
                 if not pdf_path:
-                    return jsonify({'error': 'Keine PDF-Datei in der ZIP gefunden'}), 400
-                print(f"📋 PDF aus ZIP extrahiert: {pdf_path}")
+                    return jsonify({'error': 'No PDF file found in ZIP'}), 400
+                print(f"PDF extracted from ZIP: {pdf_path}")
             elif submission_path.lower().endswith('.pdf'):
-                # Direkte PDF verwenden
+                # Use direct PDF
                 pdf_path = submission_path
-                print(f"📋 Direkte PDF verwendet: {pdf_path}")
+                print(f"Direct PDF used: {pdf_path}")
             else:
-                return jsonify({'error': 'Ungültiger Dateityp. ZIP oder PDF erwartet.'}), 400
+                return jsonify({'error': 'Invalid file type. ZIP or PDF expected.'}), 400
                 
         except Exception as e:
-            print(f"❌ Datei-Verarbeitung Fehler: {e}")
-            return jsonify({'error': f'Fehler beim Verarbeiten der Datei: {str(e)}'}), 400
+            print(f"File processing error: {e}")
+            return jsonify({'error': f'Error processing file: {str(e)}'}), 400
         
         result = None
         
         if use_database:
-            print("🔄 Standard-Bewertung mit Database")
+            print("Standard evaluation with Database")
             if not evaluation_engine:
-                return jsonify({'error': 'Standard-Bewertungssystem nicht verfügbar'}), 503
+                return jsonify({'error': 'Standard evaluation system not available'}), 503
             
             try:
                 raw_result = evaluation_engine.evaluate_pdf_submission(pdf_path)
-                print("✅ Standard-Bewertung abgeschlossen")
+                print("Standard evaluation completed")
                 
-                # Format für Frontend konvertieren
+                # Convert for frontend
                 if raw_result and 'evaluations' in raw_result:
                     overall_score = raw_result.get('overall_score', 0)
                     result = {
@@ -251,34 +251,34 @@ def evaluate():
                         "evaluations": raw_result.get('evaluations', [])
                     }
                 else:
-                    # Fallback wenn unexpected format
-                    print("⚠️ Unexpected evaluation result format")
+                    # Fallback if unexpected format
+                    print("Unexpected evaluation result format")
                     result = {
                         "overall_score": 0,
                         "passed": False,
                         "evaluations": [{
-                            "category": "Fehler",
+                            "category": "Error",
                             "score": 0,
                             "evaluation": {
-                                "gesamt_bewertung": {
-                                    "erreichte_punkte": 0,
-                                    "max_punkte": 100,
-                                    "prozent": 0.0,
-                                    "note": "Nicht bewertet"
+                                "total_evaluation": {
+                                    "achieved_points": 0,
+                                    "max_points": 100,
+                                    "percentage": 0.0,
+                                    "note": "Not evaluated"
                                 },
-                                "feedback": "Bewertung konnte nicht durchgeführt werden.",
-                                "staerken": [],
-                                "verbesserungen": ["System-Konfiguration prüfen"]
+                                "feedback": "Evaluation could not be performed.",
+                                "strengths": [],
+                                "improvements": ["Check system configuration"]
                             }
                         }]
                     }
                     
             except Exception as e:
-                print(f"❌ Standard-Bewertung Fehler: {e}")
-                return jsonify({'error': f'Standard-Bewertung fehlgeschlagen: {str(e)}'}), 500
+                print(f"Standard evaluation error: {e}")
+                return jsonify({'error': f'Standard evaluation failed: {str(e)}'}), 500
             
         else:
-            print("🔄 Benutzerdefinierte Bewertung")
+            print("Custom evaluation")
             
             # Reference files processing
             reference_files = []
@@ -290,25 +290,25 @@ def evaluate():
                         ref_path = save_uploaded_file(file, f"reference_{timestamp}")
                         if ref_path:
                             reference_files.append(ref_path)
-                            print(f"📁 Reference gespeichert: {file.filename}")
+                            print(f"Reference saved: {file.filename}")
             
             if not reference_files:
-                return jsonify({'error': 'Keine Reference-Dateien hochgeladen'}), 400
+                return jsonify({'error': 'No reference files uploaded'}), 400
             
             # Process custom references and get metadata
-            print("🔍 Processing custom references...")
+            print("Processing custom references...")
             custom_metadata = process_custom_references(reference_files)
             
             if not custom_metadata:
-                return jsonify({'error': 'Keine gültigen Reference-Dateien gefunden'}), 400
+                return jsonify({'error': 'No valid reference files found'}), 400
             
-            print(f"✅ Custom references processed: {len(custom_metadata)} categories")
+            print(f"Custom references processed: {len(custom_metadata)} categories")
             
-            # Custom evaluation mit processed references
+            # Custom evaluation with processed references
             try:
-                # Verwende evaluation_engine aber mit custom metadata
+                # Use evaluation_engine but with custom metadata
                 if not evaluation_engine:
-                    return jsonify({'error': 'Bewertungssystem nicht verfügbar'}), 503
+                    return jsonify({'error': 'Evaluation system not available'}), 503
                 
                 # Temporarily override reference metadata
                 original_metadata = evaluation_engine.metadata_db.copy()
@@ -325,7 +325,7 @@ def evaluate():
                 # Restore original metadata
                 evaluation_engine.metadata_db = original_metadata
                 
-                print("✅ Custom evaluation abgeschlossen")
+                print("Custom evaluation completed")
                 
                 # Format result
                 if raw_result and 'evaluations' in raw_result:
@@ -351,10 +351,10 @@ def evaluate():
                         pass
                         
             except Exception as e:
-                print(f"❌ Custom evaluation Fehler: {e}")
-                return jsonify({'error': f'Custom evaluation fehlgeschlagen: {str(e)}'}), 500
+                print(f"Custom evaluation error: {e}")
+                return jsonify({'error': f'Custom evaluation failed: {str(e)}'}), 500
         
-        # Cleanup temporäre Dateien
+        # Cleanup temporary files
         try:
             if os.path.exists(submission_path):
                 os.remove(submission_path)
@@ -363,9 +363,9 @@ def evaluate():
                 temp_dir = os.path.dirname(pdf_path)
                 if temp_dir and os.path.exists(temp_dir):
                     shutil.rmtree(temp_dir)
-            print("🧹 Cleanup abgeschlossen")
+            print("Cleanup completed")
         except Exception as e:
-            print(f"⚠️ Cleanup Fehler: {e}")
+            print(f"Cleanup error: {e}")
         
         # Save evaluation result to file
         try:
@@ -376,19 +376,19 @@ def evaluate():
             with open(output_file, 'w', encoding='utf-8') as f:
                 import json
                 json.dump(result, f, indent=2, ensure_ascii=False)
-            print(f"💾 Evaluation result saved to: {output_file}")
+            print(f"Evaluation result saved to: {output_file}")
         except Exception as e:
-            print(f"⚠️ Failed to save result: {e}")
+            print(f"Failed to save result: {e}")
         
-        # Ergebnis zurückgeben
-        print("📤 Ergebnis wird zurückgegeben")
+        # Return result
+        print("Result is being returned")
         return jsonify(result)
         
     except Exception as e:
-        print(f"❌ Bewertungsfehler: {e}")
+        print(f"Evaluation error: {e}")
         import traceback
         traceback.print_exc()
-        return jsonify({'error': f'Bewertungsfehler: {str(e)}'}), 500
+        return jsonify({'error': f'Evaluation error: {str(e)}'}), 500
 
 @app.route('/api/health', methods=['GET'])
 def health():
@@ -430,11 +430,11 @@ def health():
     
     if not tunnel_active or qwen_status != "active":
         status['instructions'] = [
-            "1. Öffne neues Terminal",
+            "1. Open new Terminal",
             "2. ssh -L 5000:localhost:5000 ebzg73@ki4.mni.thm.de",
-            "3. Gib dein Passwort ein",
-            "4. Lasse Terminal offen",
-            "5. Refresh diese Seite"
+            "3. Enter your password",
+            "4. Keep Terminal open",
+            "5. Refresh this page"
         ]
     
     status_code = 200 if (tunnel_active and qwen_status == "active") else 503
@@ -443,25 +443,25 @@ def health():
 
 @app.route('/api/metadata/generate', methods=['POST'])
 def generate_metadata():
-    """Metadata-Database neu generieren"""
+    """Regenerate metadata database"""
     try:
         generator = MetadataGenerator()
         generator.generate_metadata_database()
         generator.save_database()
         
-        return jsonify({'status': 'Metadata-Database erfolgreich generiert'})
+        return jsonify({'status': 'Metadata-Database successfully generated'})
     except Exception as e:
-        return jsonify({'error': f'Fehler bei Metadata-Generierung: {str(e)}'}), 500
+        return jsonify({'error': f'Error generating metadata: {str(e)}'}), 500
 
 @app.errorhandler(413)
 def too_large(e):
-    return jsonify({'error': 'Datei zu groß (max. 10MB)'}), 413
+    return jsonify({'error': 'File too large (max. 10MB)'}), 413
 
 if __name__ == '__main__':
-    print("🚀 AI Doc Checker Server wird gestartet...")
-    print(f"📁 Upload-Ordner: {UPLOAD_FOLDER}")
-    print(f"🔧 Max. Dateigröße: {MAX_CONTENT_LENGTH / (1024*1024):.1f}MB")
-    print("📄 Frontend verfügbar unter: http://localhost:5001")
-    print("🔍 API Health Check: http://localhost:5001/api/health")
+    print("AI Doc Checker Server is starting...")
+    print(f"Upload folder: {UPLOAD_FOLDER}")
+    print(f"Max file size: {MAX_CONTENT_LENGTH / (1024*1024):.1f}MB")
+    print("Frontend available at: http://localhost:5001")
+    print("API Health Check: http://localhost:5001/api/health")
     
     app.run(debug=True, host='0.0.0.0', port=5001) 

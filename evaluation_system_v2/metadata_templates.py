@@ -195,30 +195,30 @@ Du bist ein strenger Qualitätsprüfer für SAP BW Abgaben. Prüfe SEHR KRITISCH
 
 Ein Bild ist **DEFINITIV NICHT GEEIGNET** (`"is_evaluable": false`), wenn:
 
-**🚫 UI-Probleme (häufigste Fehler):**
+**UI-Probleme (häufigste Fehler):**
 - Rechtsklick-Menü ist sichtbar (Context-Menü geöffnet)
 - Dropdown-Listen, Dialog-Boxen oder Popup-Fenster überdecken den Inhalt
 - Login-Screen, SAP Startseite (Easy Access Menu) oder Transaktionsauswahl
 - Fehlermeldungen oder Warndialoge im Vordergrund
 
-**🚫 Bildqualität inakzeptabel:**
+**Bildqualität inakzeptabel:**
 - Bild ist unscharf, verpixelt oder sehr niedrige Auflösung
 - Bild ist zu dunkel/hell - Text nicht lesbar
 - Screenshot ist abgeschnitten oder unvollständig
 - Bildausschnitt zeigt nur winziges Detail oder viel zu weit herausgezoomt
 
-**🚫 Völlig falscher Inhalt:**
+**Völlig falscher Inhalt:**
 - ABAP-Code statt grafische SAP BW Modelle/Tabellen
 - Andere Software (Browser, Windows Explorer, Word, etc.)
 - Leerer Bildschirm, Ladescreen oder "Keine Daten verfügbar"
 - Private/irrelevante Inhalte (Desktop, andere Anwendungen)
 
-**🚫 Unmögliche Bewertung:**
+**Unmögliche Bewertung:**
 - Inhalt ist so schlecht/unklar, dass keine sinnvolle Bewertung möglich wäre
 - Student hat offensichtlich falsches Bild hochgeladen
 - Bild zeigt nur Fehlermeldung ohne relevanten SAP BW Inhalt
 
-**✅ NUR GEEIGNET wenn:**
+**NUR GEEIGNET wenn:**
 - Klarer SAP BW Inhalt erkennbar (Tabellen, Diagramme, Modelle)
 - Ausreichende Bildqualität für Bewertung
 - Kein störendes UI überlagert den Inhalt

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🌐 Qwen2.5-VL 7B API Server
+Qwen2.5-VL 7B API Server
 Provides remote access to the model running on university server
 """
 
@@ -27,7 +27,7 @@ def load_model():
     global model, processor, tokenizer
     
     if model is None:
-        print("🔄 Loading Qwen2.5-VL 7B model...")
+        print("Loading Qwen2.5-VL 7B model...")
         model_path = "./qwen2-vl-7b"
         
         # Load tokenizer and processor first (faster)
@@ -44,7 +44,7 @@ def load_model():
             low_cpu_mem_usage=True  # Reduce RAM usage during loading
         )
         
-        print("✅ Model loaded and ready for inference!")
+        print("Model loaded and ready for inference!")
 
 @app.route('/health', methods=['GET'])
 def health():
@@ -226,10 +226,10 @@ def text_only():
         }), 500
 
 if __name__ == '__main__':
-    print("🚀 Starting Qwen2.5-VL 7B API Server...")
+    print("Starting Qwen2.5-VL 7B API Server...")
     load_model()
     
-    print("🌐 Server will be accessible at:")
+    print("Server will be accessible at:")
     print("   - Local: http://localhost:5000")
     print("   - Network: http://ki4.mni.thm.de:5000")
     print("   - Health check: GET /health")

@@ -25,7 +25,6 @@ from .metadata_generator import MetadataGenerator
 from .evaluation_engine import EvaluationEngine
 
 __version__ = "2.0.0"
-__author__ = "THM Students"
 
 __all__ = [
     "PDFImageExtractor",
