@@ -194,7 +194,7 @@ JSON Results + Summary
 
 ```python
 # Custom confidence threshold
-classifier = ImageClassifier(confidence_threshold=0.7)
+classifier = ImageClassifier(confidence_threshold=0.6)
 
 # Custom Qwen server
 qwen_client = QwenClient(base_url="http://custom-server:5000")
