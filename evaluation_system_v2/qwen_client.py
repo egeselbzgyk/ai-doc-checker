@@ -429,16 +429,43 @@ KRITISCH:
             
             # Create enhanced prompt with visual comparison + category-specific template
             enhanced_prompt = f"""
-Du siehst zwei SAP BW Bilder nebeneinander:
+KRITISCHE BEWERTUNG - SEI SEHR STRENG!
 
-LINKS: STUDENTEN-BILD (zu bewerten)
+Du siehst zwei SAP BW Bilder nebeneinander:
+LINKS: STUDENTEN-BILD (zu bewerten)  
 RECHTS: REFERENZ-MUSTERLÖSUNG (Vergleichsstandard)
 
 Kategorie: {category} ({mode_info})
 
-Führe eine DETAILLIERTE VISUELLE BEWERTUNG durch, basierend auf dem Vergleich zwischen dem linken (Studenten-) und rechten (Referenz-) Bild.
+⚠️ WICHTIGE BEWERTUNGSREGELN:
+1. VERGLEICHE PIXEL-GENAU! Jeder Unterschied kostet Punkte!
+2. ERWARTE PERFEKTION! Nur identische Lösungen verdienen >90 Punkte
+3. SEI MISSTRAUISCH! Suche aktiv nach Fehlern und Abweichungen
+4. VERGIB REALISTISCHE PUNKTE! Durchschnitt sollte 60-75 sein, NICHT 95+
 
-{templates[category].replace('Referenz-Analyse: {reference_analysis}', 'Verwende das rechte Bild als Referenz für den Vergleich.')}
+OBLIGATORISCHE UNTERSCHIEDSANALYSE:
+- Was ist im STUDENTEN-BILD anders als in der REFERENZ?
+- Welche Elemente FEHLEN oder sind FALSCH positioniert?
+- Welche Texte/Labels sind UNTERSCHIEDLICH?
+- Ist die Struktur/Layout IDENTISCH oder abweichend?
+
+PUNKTEVERGABE-RICHTLINIEN:
+- 90-100: IDENTISCH zur Referenz (sehr selten!)
+- 75-89: Minimale, akzeptable Abweichungen
+- 60-74: Deutliche Unterschiede, aber erkennbare Lösung
+- 40-59: Größere Fehler, unvollständige Lösung
+- 0-39: Falsche oder völlig unpassende Lösung
+
+VERBOTEN:
+- Automatisch hohe Punkte vergeben ohne genaue Prüfung
+- "Gut genug" Mentalität - sei pedantisch!
+- Leere "verbesserungen" Liste - IMMER Kritikpunkte finden!
+
+ZWINGE DICH: Finde mindestens 2 konkrete Unterschiede oder Verbesserungsmöglichkeiten!
+
+{templates[category].replace('Referenz-Analyse: {reference_analysis}', 'Verwende das rechte Bild als exakte Referenz. JEDE Abweichung muss in der Bewertung reflektiert werden!')}
+
+FINAL CHECK: Wenn deine Bewertung >85 Punkte hat, erkläre explizit warum das gerechtfertigt ist!
 """
             
             result = self.analyze_image(combined_base64, enhanced_prompt, max_tokens=2048)
