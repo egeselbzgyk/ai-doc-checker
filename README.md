@@ -42,8 +42,6 @@ The evaluation system processes student PDF submissions through multiple stages:
 ### Installation
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
 
 # Initialize the system
 python metadata_generator.py generate  # Generate metadata database (one-time)
