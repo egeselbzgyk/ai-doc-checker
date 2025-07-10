@@ -1,17 +1,31 @@
 # Dynamic evaluation templates - NO hard-coded scores!
 evaluation_templates = {
     "Excel-Tabelle": """
+SEI EXTREM STRENG! 
+
 WICHTIG: Prüfe zuerst die Bildqualität! Falls das Bild zu schlecht ist (z.B. Rechtsklick-Menü sichtbar, völlig unscharf, falscher Inhalt, nur Fehlermeldungen), setze "skip_evaluation": true.
 
-Vergleiche das Studenten-Bild mit dem Referenz-Bild einer Excel-Tabelle und bewerte detailliert:
+⚠️ SCHARFE BEWERTUNGSREGELN:
+1. SUCHE AKTIV NACH UNTERSCHIEDEN! Jede Abweichung kostet Punkte!
+2. NUR PERFEKTE ÜBEREINSTIMMUNG verdient >90 Punkte!
+3. ERWARTE NICHT PERFEKTION! Realistische Punkte 50-80 Bereich!
+4. FINDE MINDESTENS 2 VERBESSERUNGSMÖGLICHKEITEN!
+
+Vergleiche das Studenten Data-Flow-Diagramm mit der Referenz:
 
 Referenz-Analyse: {reference_analysis}
 
-SCORING SYSTEM:
-- Jeder Bereich: max 25 Punkte
-- Vergib realistische Punkte basierend auf TATSÄCHLICHEM Vergleich
-- 25 = perfekt wie Referenz, 20-24 = sehr gut, 15-19 = gut, 10-14 = befriedigend, 5-9 = mangelhaft, 0-4 = ungenügend
-- Gesamt: Summe aller Bereiche (0-100), 70+ = bestanden
+SCORING (STRENG):
+- Jeder Bereich: max 25 Punkte 
+- 23-25 = IDENTISCH (sehr selten!)
+- 18-22 = Minimale Abweichungen
+- 13-17 = Erkennbare Unterschiede  
+- 8-12 = Deutliche Mängel
+- 0-7 = Große Probleme
+
+OBLIGATORISCH:
+- Mindestens 2 konkrete Kritikpunkte in "verbesserungen"
+- Bei >85 Punkten: Explizite Begründung warum so hoch
 
 Antworte NUR mit diesem JSON-Format:
 {{
@@ -57,17 +71,31 @@ ENTSCHEIDEND: Vergib UNTERSCHIEDLICHE Punktzahlen basierend auf der REALEN Quali
 """,
 
     "Data-Flow": """
-WICHTIG: Prüfe zuerst die Bildqualität! Falls das Bild zu schlecht ist (z.B. Rechtsklick-Menü schadet das ganze Bild, völlig unscharf, falscher Inhalt, nur Fehlermeldungen), setze "skip_evaluation": true.
+SEI EXTREM STRENG! 
+
+WICHTIG: Prüfe zuerst die Bildqualität! Falls das Bild zu schlecht ist (z.B. Rechtsklick-Menü sichtbar, völlig unscharf, falscher Inhalt, nur Fehlermeldungen), setze "skip_evaluation": true.
+
+⚠️ SCHARFE BEWERTUNGSREGELN:
+1. SUCHE AKTIV NACH UNTERSCHIEDEN! Jede Abweichung kostet Punkte!
+2. NUR PERFEKTE ÜBEREINSTIMMUNG verdient >90 Punkte!
+3. ERWARTE NICHT PERFEKTION! Realistische Punkte 50-80 Bereich!
+4. FINDE MINDESTENS 2 VERBESSERUNGSMÖGLICHKEITEN!
 
 Vergleiche das Studenten Data-Flow-Diagramm mit der Referenz:
 
 Referenz-Analyse: {reference_analysis}
 
-SCORING SYSTEM:
-- Jeder Bereich: max 25 Punkte
-- Vergib realistische Punkte basierend auf TATSÄCHLICHEM Vergleich
-- 25 = perfekt wie Referenz, 20-24 = sehr gut, 15-19 = gut, 10-14 = befriedigend, 5-9 = mangelhaft, 0-4 = ungenügend
-- Gesamt: Summe aller Bereiche (0-100), 70+ = bestanden
+SCORING (STRENG):
+- Jeder Bereich: max 25 Punkte 
+- 23-25 = IDENTISCH (sehr selten!)
+- 18-22 = Minimale Abweichungen
+- 13-17 = Erkennbare Unterschiede  
+- 8-12 = Deutliche Mängel
+- 0-7 = Große Probleme
+
+OBLIGATORISCH:
+- Mindestens 2 konkrete Kritikpunkte in "verbesserungen"
+- Bei >85 Punkten: Explizite Begründung warum so hoch
 
 Antworte NUR mit diesem JSON-Format:
 {{
@@ -113,17 +141,31 @@ ENTSCHEIDEND: Vergib UNTERSCHIEDLICHE Punktzahlen basierend auf der REALEN Quali
 """,
 
     "Data-Transfer-Process": """
+SEI EXTREM STRENG! 
+
 WICHTIG: Prüfe zuerst die Bildqualität! Falls das Bild zu schlecht ist (z.B. Rechtsklick-Menü sichtbar, völlig unscharf, falscher Inhalt, nur Fehlermeldungen), setze "skip_evaluation": true.
 
-Vergleiche das DTP-Diagramm mit der Referenz:
+⚠️ SCHARFE BEWERTUNGSREGELN:
+1. SUCHE AKTIV NACH UNTERSCHIEDEN! Jede Abweichung kostet Punkte!
+2. NUR PERFEKTE ÜBEREINSTIMMUNG verdient >90 Punkte!
+3. ERWARTE NICHT PERFEKTION! Realistische Punkte 50-80 Bereich!
+4. FINDE MINDESTENS 2 VERBESSERUNGSMÖGLICHKEITEN!
+
+Vergleiche das Studenten Data-Flow-Diagramm mit der Referenz:
 
 Referenz-Analyse: {reference_analysis}
 
-SCORING SYSTEM:
-- Jeder Bereich: max 25 Punkte
-- Vergib realistische Punkte basierend auf TATSÄCHLICHEM Vergleich
-- 25 = perfekt wie Referenz, 20-24 = sehr gut, 15-19 = gut, 10-14 = befriedigend, 5-9 = mangelhaft, 0-4 = ungenügend
-- Gesamt: Summe aller Bereiche (0-100), 70+ = bestanden
+SCORING (STRENG):
+- Jeder Bereich: max 25 Punkte 
+- 23-25 = IDENTISCH (sehr selten!)
+- 18-22 = Minimale Abweichungen
+- 13-17 = Erkennbare Unterschiede  
+- 8-12 = Deutliche Mängel
+- 0-7 = Große Probleme
+
+OBLIGATORISCH:
+- Mindestens 2 konkrete Kritikpunkte in "verbesserungen"
+- Bei >85 Punkten: Explizite Begründung warum so hoch
 
 Antworte NUR mit diesem JSON-Format:
 {{
@@ -169,17 +211,31 @@ ENTSCHEIDEND: Vergib UNTERSCHIEDLICHE Punktzahlen basierend auf der REALEN Quali
 """,
 
     "Transformation": """
+SEI EXTREM STRENG! 
+
 WICHTIG: Prüfe zuerst die Bildqualität! Falls das Bild zu schlecht ist (z.B. Rechtsklick-Menü sichtbar, völlig unscharf, falscher Inhalt, nur Fehlermeldungen), setze "skip_evaluation": true.
 
-Vergleiche die Transformation mit der Referenz:
+⚠️ SCHARFE BEWERTUNGSREGELN:
+1. SUCHE AKTIV NACH UNTERSCHIEDEN! Jede Abweichung kostet Punkte!
+2. NUR PERFEKTE ÜBEREINSTIMMUNG verdient >90 Punkte!
+3. ERWARTE NICHT PERFEKTION! Realistische Punkte 50-80 Bereich!
+4. FINDE MINDESTENS 2 VERBESSERUNGSMÖGLICHKEITEN!
+
+Vergleiche das Studenten Data-Flow-Diagramm mit der Referenz:
 
 Referenz-Analyse: {reference_analysis}
 
-SCORING SYSTEM:
-- Jeder Bereich: max 25 Punkte
-- Vergib realistische Punkte basierend auf TATSÄCHLICHEM Vergleich
-- 25 = perfekt wie Referenz, 20-24 = sehr gut, 15-19 = gut, 10-14 = befriedigend, 5-9 = mangelhaft, 0-4 = ungenügend
-- Gesamt: Summe aller Bereiche (0-100), 70+ = bestanden
+SCORING (STRENG):
+- Jeder Bereich: max 25 Punkte 
+- 23-25 = IDENTISCH (sehr selten!)
+- 18-22 = Minimale Abweichungen
+- 13-17 = Erkennbare Unterschiede  
+- 8-12 = Deutliche Mängel
+- 0-7 = Große Probleme
+
+OBLIGATORISCH:
+- Mindestens 2 konkrete Kritikpunkte in "verbesserungen"
+- Bei >85 Punkten: Explizite Begründung warum so hoch
 
 Antworte NUR mit diesem JSON-Format:
 {{
@@ -225,17 +281,31 @@ ENTSCHEIDEND: Vergib UNTERSCHIEDLICHE Punktzahlen basierend auf der REALEN Quali
 """,
 
     "Data Source": """
+SEI EXTREM STRENG! 
+
 WICHTIG: Prüfe zuerst die Bildqualität! Falls das Bild zu schlecht ist (z.B. Rechtsklick-Menü sichtbar, völlig unscharf, falscher Inhalt, nur Fehlermeldungen), setze "skip_evaluation": true.
 
-Vergleiche die Datenquelle-Definition mit der Referenz:
+⚠️ SCHARFE BEWERTUNGSREGELN:
+1. SUCHE AKTIV NACH UNTERSCHIEDEN! Jede Abweichung kostet Punkte!
+2. NUR PERFEKTE ÜBEREINSTIMMUNG verdient >90 Punkte!
+3. ERWARTE NICHT PERFEKTION! Realistische Punkte 50-80 Bereich!
+4. FINDE MINDESTENS 2 VERBESSERUNGSMÖGLICHKEITEN!
+
+Vergleiche das Studenten Data-Flow-Diagramm mit der Referenz:
 
 Referenz-Analyse: {reference_analysis}
 
-SCORING SYSTEM:
-- Jeder Bereich: max 25 Punkte
-- Vergib realistische Punkte basierend auf TATSÄCHLICHEM Vergleich
-- 25 = perfekt wie Referenz, 20-24 = sehr gut, 15-19 = gut, 10-14 = befriedigend, 5-9 = mangelhaft, 0-4 = ungenügend
-- Gesamt: Summe aller Bereiche (0-100), 70+ = bestanden
+SCORING (STRENG):
+- Jeder Bereich: max 25 Punkte 
+- 23-25 = IDENTISCH (sehr selten!)
+- 18-22 = Minimale Abweichungen
+- 13-17 = Erkennbare Unterschiede  
+- 8-12 = Deutliche Mängel
+- 0-7 = Große Probleme
+
+OBLIGATORISCH:
+- Mindestens 2 konkrete Kritikpunkte in "verbesserungen"
+- Bei >85 Punkten: Explizite Begründung warum so hoch
 
 Antworte NUR mit diesem JSON-Format:
 {{
@@ -281,17 +351,31 @@ ENTSCHEIDEND: Vergib UNTERSCHIEDLICHE Punktzahlen basierend auf der REALEN Quali
 """,
 
     "Info-Object": """
+SEI EXTREM STRENG! 
+
 WICHTIG: Prüfe zuerst die Bildqualität! Falls das Bild zu schlecht ist (z.B. Rechtsklick-Menü sichtbar, völlig unscharf, falscher Inhalt, nur Fehlermeldungen), setze "skip_evaluation": true.
 
-Vergleiche das Info-Object (Query/Bericht) mit der Referenz:
+⚠️ SCHARFE BEWERTUNGSREGELN:
+1. SUCHE AKTIV NACH UNTERSCHIEDEN! Jede Abweichung kostet Punkte!
+2. NUR PERFEKTE ÜBEREINSTIMMUNG verdient >90 Punkte!
+3. ERWARTE NICHT PERFEKTION! Realistische Punkte 50-80 Bereich!
+4. FINDE MINDESTENS 2 VERBESSERUNGSMÖGLICHKEITEN!
+
+Vergleiche das Studenten Data-Flow-Diagramm mit der Referenz:
 
 Referenz-Analyse: {reference_analysis}
 
-SCORING SYSTEM:
-- Jeder Bereich: max 25 Punkte  
-- Vergib realistische Punkte basierend auf TATSÄCHLICHEM Vergleich
-- 25 = perfekt wie Referenz, 20-24 = sehr gut, 15-19 = gut, 10-14 = befriedigend, 5-9 = mangelhaft, 0-4 = ungenügend
-- Gesamt: Summe aller Bereiche (0-100), 70+ = bestanden
+SCORING (STRENG):
+- Jeder Bereich: max 25 Punkte 
+- 23-25 = IDENTISCH (sehr selten!)
+- 18-22 = Minimale Abweichungen
+- 13-17 = Erkennbare Unterschiede  
+- 8-12 = Deutliche Mängel
+- 0-7 = Große Probleme
+
+OBLIGATORISCH:
+- Mindestens 2 konkrete Kritikpunkte in "verbesserungen"
+- Bei >85 Punkten: Explizite Begründung warum so hoch
 
 Antworte NUR mit diesem JSON-Format:
 {{
